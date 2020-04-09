@@ -6,10 +6,11 @@ import random
 
 from models import setup_db, Question, Category
 
-QUESTIONS_PER_PAGE = 10
+QUESTIONS_PER_PAGE = 2
 
 def paginate_questions(request, selections):
-    questions = list(map(question.format(),selections))
+    questions = [question.format() for question in selections]
+    #questions = list(map(question.format(),selections))
     page = request.args.get("page", 1, type=int)
     start = (page - 1) * QUESTIONS_PER_PAGE
     end = start + QUESTIONS_PER_PAGE
