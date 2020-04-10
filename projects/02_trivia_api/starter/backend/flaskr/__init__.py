@@ -42,9 +42,9 @@ def create_app(test_config=None):
                              'GET,PATCH,POST,DELETE,OPTIONS')
         return response
 
-   	#===================
+   	
     #=== Categories ====
-    #===================
+    
   	
     @app.route('/categories')
     def get_categories():
@@ -60,9 +60,9 @@ def create_app(test_config=None):
         })
 
     
-	 #===================
-     #==== Questions ====
-     #===================
+	 
+     #==== Get Questions ====
+    
 	
     @app.route('/questions')
     def get_questions():
@@ -83,7 +83,7 @@ def create_app(test_config=None):
             'categories': formatted_categories
         })
 
-    
+    # ==== Delete Question ====
     @app.route('/questions/<int:question_id>', methods=['DELETE'])
     def delete_question(question_id):
         try:
@@ -104,7 +104,7 @@ def create_app(test_config=None):
         except:
             abort(422)
 
-    
+    #===== Post Questions =====
     @app.route('/questions', methods=['POST'])
     def create_question():
         body = request.get_json()
@@ -130,15 +130,7 @@ def create_app(test_config=None):
         except:
             abort(422)
 
-    '''
-  @DONE:
-  Create a POST endpoint to get questions based on a search term.
-  It should return any questions for whom the search term
-  is a substring of the question.
-  TEST: Search by any phrase. The questions list will update to include
-  only question that include that string within their question.
-  Try using the word "title" to start.
-  '''
+    #==== Search Question ====
     @app.route('/questions/search', methods=['POST'])
     def search_question():
         body = request.get_json()
@@ -156,9 +148,9 @@ def create_app(test_config=None):
         })
 
 
-	#----------------------------
-    #GET  Question by Category
-    #----------------------------
+	
+    #====GET Question by Category ====
+    
     @app.route('/categories/<int:category_id>/questions')
     def get_questions_by_category(category_id):
         try:
@@ -182,9 +174,9 @@ def create_app(test_config=None):
         except:
             abort(422)
 
-   	#== == == == == == == == == =
-    #== == = Quizzes == == =
-    #== == == == == == == == == =
+   	
+    #==== Quizzes ====
+    
     @app.route('/quizzes', methods=['POST'])
     def get_quiz():
         body = request.get_json()
@@ -211,7 +203,7 @@ def create_app(test_config=None):
             'question': question.format()
         })
   
-    #error Handler
+    #==== error Handler ===
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
