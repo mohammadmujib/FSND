@@ -132,7 +132,7 @@ def create_app(test_config=None):
             abort(422)
 
     '''
-  
+  @DONE:
   Create a POST endpoint to get questions based on a search term.
   It should return any questions for whom the search term
   is a substring of the question.
@@ -217,9 +217,7 @@ def create_app(test_config=None):
             'question': question.format()
         })
   
-""" =================================================================
-#  Error Handlers for all expected errors 400, 404, 422
-# ================================================================="""
+    #error Handler
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
