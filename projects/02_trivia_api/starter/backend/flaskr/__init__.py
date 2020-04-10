@@ -42,13 +42,13 @@ def create_app(test_config=None):
                              'GET,PATCH,POST,DELETE,OPTIONS')
         return response
 
-   	
+   	#===================
+    #=== Categories ====
+    #===================
+  	
     @app.route('/categories')
     def get_categories():
-	"""===================
-    === Categories ====
-    ===================
-  	"""
+	
         categories = Category.query.all()
         formatted_categories = {
             category.id: category.type for category in categories}
@@ -59,11 +59,11 @@ def create_app(test_config=None):
             'total_categories': len(categories)
         })
 
-    """
-	 ===================
-     ==== Questions ====
-     ===================
-	"""
+    
+	 #===================
+     #==== Questions ====
+     #===================
+	
     @app.route('/questions')
     def get_questions():
         selection = Question.query.order_by(Question.id).all()
@@ -155,14 +155,12 @@ def create_app(test_config=None):
             'current_category': None,
         })
 
-   
+
+	#----------------------------
+    #GET  Question by Category
+    #----------------------------
     @app.route('/categories/<int:category_id>/questions')
     def get_questions_by_category(category_id):
-
-	"""----------------------------
-    GET  Question by Category
-    ----------------------------"""
-
         try:
             selection = Question.query.filter(
                 Question.category == category_id).order_by(Question.id).all()
@@ -184,14 +182,11 @@ def create_app(test_config=None):
         except:
             abort(422)
 
-   
+   	#== == == == == == == == == =
+    #== == = Quizzes == == =
+    #== == == == == == == == == =
     @app.route('/quizzes', methods=['POST'])
     def get_quiz():
-
-	"""== == == == == == == == == =
-    == == = Quizzes == == =
-    == == == == == == == == == ="""
-
         body = request.get_json()
         category_data = body.get('quiz_category')
         previous = body.get('previous_questions')
