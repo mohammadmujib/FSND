@@ -32,8 +32,7 @@ def create_app(test_config=None):
     cors = CORS(app, resources={r"/*": {"origins": "*"}})
     # CORS(app)
 
-    
-"""Use the after_request decorator to set Access-Control-Allow"""
+
   
     @app.after_request
     def after_request(response):
