@@ -30,30 +30,40 @@ class AuthError(Exception):
         it should raise an AuthError if the header is malformed
     return the token part of the header
 '''
+
+
 def get_token_auth_header():
     auth = request.headers.get('Authorization', None)
-
+    print(auth)
     if not auth:
         raise AuthError({
             'code': 'authorization_header_missing',
-            'description': 'No authorization header'
+            'description': 'Authorization header is expected.'
         }, 401)
 
-    auth_parts = auth.split(' ')
-    if auth_parts[0].lower() != 'bearer':
+    parts = auth.split()
+    print(len(parts))
+    if parts[0].lower() != 'bearer':
         raise AuthError({
             'code': 'invalid_header',
-            'description': 'Authorization header must start with bearer'
+            'description': 'Authorization header must start with "Bearer".'
         }, 401)
 
-    elif len(auth_parts) == 1:
+    elif len(parts) == 1:
         raise AuthError({
             'code': 'invalid_header',
-            'description': 'Authorization header does not contain token'
+            'description': 'Token not found.'
         }, 401)
 
-    token = auth_parts[1]
-    return tokens
+    elif len(parts) > 2:
+        raise AuthError({
+            'code': 'invalid_header',
+            'description': 'Authorization header must be bearer token.'
+        }, 401)
+
+    token = parts[1]
+    print(token)
+    return token
    
 
 '''
